@@ -21,7 +21,11 @@ class MealPlanState extends State<MealPlan> {
         child: Column(
           children: [
                 
-            pageTitle(context, "Meal Plan", false, false, setState),
+            Padding(
+              padding: EdgeInsets.only(top: 20, bottom: 25),
+                child: pageTitle(
+                  context, "Recipes", true, false, setState),
+                    ),
 
             DropdownButton(
               // value: dropdownValue,
