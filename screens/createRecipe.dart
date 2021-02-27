@@ -226,6 +226,28 @@ class CreateRecipeState extends State<CreateRecipe> {
                         },
                       ),
                       SizedBox(height:50),
+                      InkWell(
+                        child: Container(
+                          width: 220,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: redTheme,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children:[
+                              Icon(Icons.camera_alt, color: whiteFontColor,),
+                              Text("Photo of recipe", style: basicWhite,),
+                            ]
+                          )
+                        ),
+                        onTap: (){
+                          //  !
+                          saveImage(); 
+                        },
+                      ),
+                      SizedBox(height: 10,),
                       Container(
                         child: TextFormField(
                           style: basicBlack,
@@ -440,7 +462,7 @@ class CreateRecipeState extends State<CreateRecipe> {
                           print(CreateRecipeForm.servings);
                           print(CreateRecipeForm.ingredients);
                           print(CreateRecipeForm.steps);
-                          createRecipe(user.uid, CreateRecipeForm.title, CreateRecipeForm.prepTime, CreateRecipeForm.servings,CreateRecipeForm.ingredients, CreateRecipeForm.steps);
+                          createRecipe(user.uid, CreateRecipeForm.title, CreateRecipeForm.prepTime, CreateRecipeForm.servings,CreateRecipeForm.ingredients, CreateRecipeForm.steps,CreateRecipeForm.recipeImage);
                         },
                       ),
                       SizedBox(height: 10)

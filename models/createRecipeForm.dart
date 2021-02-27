@@ -1,3 +1,4 @@
+import 'dart:io';
 class CreateRecipeForm{
   static String title;
   static int prepTime;
@@ -6,4 +7,5 @@ class CreateRecipeForm{
   static Map ingredients = {
 
   };
+  static File recipeImage;
 }

@@ -1,8 +1,10 @@
+import "dart:io";
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:recipes/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:path/path.dart' as Path;  
 
 
 
@@ -84,9 +86,23 @@ class DatabaseUserService {
 
 
 
+Future<String> uploadFile(File _image) async {
+  StorageReference storageReference = FirebaseStorage.instance
+      .ref()
+      .child('recipes/${Path.basename(_image.path)}');
+  StorageUploadTask uploadTask = storageReference.putFile(_image);
+  await uploadTask.onComplete;
+  print('File Uploaded');
+  String returnURL;
+  await storageReference.getDownloadURL().then((fileURL) {
+    returnURL =  fileURL;
+  });
+  return returnURL;
+}
 
 
-void createRecipe(String userId, String title, int prep, int servings, Map ingredients, List steps) async{
+void createRecipe(String userId, String title, int prep, int servings, Map ingredients, List steps, File recipeImage) async{
+  
   DocumentReference ref = await FirebaseFirestore.instance.collection('recipes').add({
     'createdBy': userId,
     'title': title,
@@ -94,8 +110,11 @@ void createRecipe(String userId, String title, int prep, int servings, Map ingre
     'servings': servings,
     'ingredients': ingredients,
     'steps': steps,
-    "votes": 1
+    "votes": 1,
+    "image": await uploadFile(recipeImage)
   }).catchError((error) => print("Failed to add recipes: $error"));
+
+  // ! add to firestore
 }
 
 

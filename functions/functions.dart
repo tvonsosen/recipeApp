@@ -10,6 +10,8 @@ import 'package:recipes/models/createRecipeForm.dart';
 final picker = ImagePicker();
 String URL='https://5adfc1b462c1.ngrok.io/findRecipe'; // ! I have to reset this url every 2 hours due to the tunneling tool
 
+
+
 Future scanImage() async {
   final pickedFile = await picker.getImage(source: ImageSource.gallery);  // ! change to camera for use on real phone
   File fileImage = File(pickedFile.path);
@@ -24,13 +26,19 @@ Future scanImage() async {
     var result=jsonDecode(response.body);
     CreateRecipeForm.title=result['title'];
     CreateRecipeForm.ingredients=result['ingredients'];
-    CreateRecipeForm.steps=[result['instructions']];
+    CreateRecipeForm.steps=result['instructions'];
     CreateRecipeForm.prepTime=0; // temporary value
+    CreateRecipeForm.servings=int.parse(result['servings']);
 
   }else{
     throw Exception('Failed request');
   }
   //Image image = Image.file(fileImage);
   
+}
 
+Future saveImage() async{
+  final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  File fileImage = File(pickedFile.path);
+  CreateRecipeForm.recipeImage = fileImage;
 }
