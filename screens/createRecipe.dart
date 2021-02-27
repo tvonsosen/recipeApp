@@ -243,7 +243,8 @@ class CreateRecipeState extends State<CreateRecipe> {
                           )
                         ),
                         onTap: (){
-                          //  ! 
+                          //  !
+                          saveImage(); 
                         },
                       ),
                       SizedBox(height: 10,),
@@ -461,7 +462,7 @@ class CreateRecipeState extends State<CreateRecipe> {
                           print(CreateRecipeForm.servings);
                           print(CreateRecipeForm.ingredients);
                           print(CreateRecipeForm.steps);
-                          createRecipe(user.uid, CreateRecipeForm.title, CreateRecipeForm.prepTime, CreateRecipeForm.servings,CreateRecipeForm.ingredients, CreateRecipeForm.steps);
+                          createRecipe(user.uid, CreateRecipeForm.title, CreateRecipeForm.prepTime, CreateRecipeForm.servings,CreateRecipeForm.ingredients, CreateRecipeForm.steps,CreateRecipeForm.recipeImage);
                         },
                       ),
                       SizedBox(height: 10)
