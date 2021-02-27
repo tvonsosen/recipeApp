@@ -83,7 +83,7 @@ class CreateRecipeState extends State<CreateRecipe> {
                               'Unit',
                               style: basicSmallBlack,
                             ),
-                            items: ["Cups", "Tbsps", "Ozs", "Tsp", "g"].map((String value) {
+                            items: ["Cups", "Tbsps", "OZs", "Tsp", "g", "packs"].map((String value) {
                               return new DropdownMenuItem<String>(
                                 
                                 value: value,
@@ -114,7 +114,11 @@ class CreateRecipeState extends State<CreateRecipe> {
             TextButton(
               child: Text('Add'),
               onPressed: () async {
-                CreateRecipeForm.ingredients.add([NewIngredient.name, NewIngredient.amount, NewIngredient.unit]);
+                CreateRecipeForm.ingredients.addAll({
+                  "name" : NewIngredient.name, 
+                  "amount" : NewIngredient.amount, 
+                  "unit" : NewIngredient.unit,
+                });
                 Navigator.pop(context);
               },
             ),
@@ -165,8 +169,7 @@ class CreateRecipeState extends State<CreateRecipe> {
             TextButton(
               child: Text('Cancel'),
               onPressed: () async {
-                // await _auth.signOut();
-                // Navigator.pop(context);
+
                 Navigator.pop(context);
               },
             ),

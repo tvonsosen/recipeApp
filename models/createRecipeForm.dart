@@ -3,5 +3,7 @@ class CreateRecipeForm{
   static int prepTime;
   static int servings;
   static List steps = []; // list of steps
-  static List ingredients = []; // example: [["name", quantity,unittype]... etc]]
+  static Map ingredients = {
+
+  };
 }

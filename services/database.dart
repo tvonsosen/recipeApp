@@ -86,14 +86,15 @@ class DatabaseUserService {
 
 
 
-void createRecipe(String userId, String title, int prep, int servings, List ingredients, List steps) async{
+void createRecipe(String userId, String title, int prep, int servings, Map ingredients, List steps) async{
   DocumentReference ref = await FirebaseFirestore.instance.collection('recipes').add({
     'createdBy': userId,
     'title': title,
     'prep': prep,
     'servings': servings,
-    // 'ingredients': ingredients,
-    // 'steps': steps
+    'ingredients': ingredients,
+    'steps': steps,
+    "votes": 1
   }).catchError((error) => print("Failed to add recipes: $error"));
 }
 
