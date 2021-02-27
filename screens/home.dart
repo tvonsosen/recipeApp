@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:recipes/elements/pageTitle.dart';
 import 'package:recipes/screens/createRecipe.dart';
 import 'package:recipes/services/auth.dart';
@@ -105,8 +106,37 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                RecipesWidget(context, "Hot Dogs", "2", "20 min", "Hot Dogs and Buns", "Cook hot dogs, put into buns", 20, setState)
+                
+                StreamBuilder(
+                  stream: FirebaseFirestore.instance.collection('recipes').snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                    // for(var item in snapshot.data.docs){
+                    //   print(item.id);
+                    // }
+                    if(!snapshot.hasData){
+                      return Loading();
+                    }
+                    List schedulesList = snapshot.data.docs.toList();
+                    return Container(
+                      
+                      // margin: EdgeInsets.only(left:15, right: 15),
 
+                            
+                      child: Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          clipBehavior: Clip.none,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: schedulesList.length + 1,
+                          itemBuilder: (context, index){
+                            return RecipesWidget(context, "Hot Dogs", "2", "20 min", "Hot Dogs and Buns", "Cook hot dogs, put into buns", 20, setState);
+                          }
+                        )
+                      )
+                    );
+
+                  }
+                ),
                 
                 
               ]
