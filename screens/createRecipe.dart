@@ -226,6 +226,27 @@ class CreateRecipeState extends State<CreateRecipe> {
                         },
                       ),
                       SizedBox(height:50),
+                      InkWell(
+                        child: Container(
+                          width: 220,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: redTheme,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children:[
+                              Icon(Icons.camera_alt, color: whiteFontColor,),
+                              Text("Photo of recipe", style: basicWhite,),
+                            ]
+                          )
+                        ),
+                        onTap: (){
+                          scanImage();
+                        },
+                      ),
+                      SizedBox(height: 10,),
                       Container(
                         child: TextFormField(
                           style: basicBlack,
