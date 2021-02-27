@@ -129,10 +129,10 @@ class _HomePageState extends State<HomePage> {
                               child: ListView.builder(
                                 itemCount: recipeList.length,
                                 itemBuilder: (context, index){
-                                  return RecipesWidget(context, recipeList[index]["title"], recipeList[index]["servings"].toString(), "${recipeList[index]["prep"].toString()} mins", recipeList[index]["title"], recipeList[index]["title"], recipeList[index]["votes"], setState);
+                                  return RecipesWidget(context, recipeList[index]["title"], recipeList[index]["servings"].toString(), "${recipeList[index]["prep"].toString()} mins", recipeList[index]["votes"], recipeList[index]["image"], setState);
                                 }
                               )
-                            )
+                            ),
                           ]
                         )
                       );
