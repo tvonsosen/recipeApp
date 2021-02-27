@@ -243,7 +243,7 @@ class CreateRecipeState extends State<CreateRecipe> {
                           )
                         ),
                         onTap: (){
-                          scanImage();
+                          //  ! 
                         },
                       ),
                       SizedBox(height: 10,),
