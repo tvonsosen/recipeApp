@@ -38,10 +38,13 @@ MealDays (BuildContext context, String day, String mealNames, StateSetter setSta
            )
      ),
       Spacer(),
-      IconButton(
-        icon: Icon(Icons.add),
-          iconSize: 30),
-      ],)
+      Align(
+        alignment: Alignment.bottomRight,
+        child: IconButton(
+          icon: Icon(Icons.add, color: Colors.white),
+            iconSize: 30),
+    ),
+    ],)
 
   
     );
