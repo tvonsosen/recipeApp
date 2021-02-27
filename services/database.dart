@@ -1,10 +1,11 @@
-import "dart:io";
-import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 import 'package:recipes/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:path/path.dart' as Path;  
+import 'package:firebase_storage/firebase_storage.dart';
+
 
 
 
@@ -80,6 +81,8 @@ class DatabaseUserService {
 
 
 }
+
+
 
 
 

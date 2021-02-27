@@ -13,23 +13,22 @@ RecipesWidget(
   StateSetter setState,
   //Image asset
 ) {
-  bool favorited;
-  bool valueUp;
+  // bool favorited;
+  // bool valueUp;
   return Container(
-    
+    margin: EdgeInsets.all(15),
     decoration: BoxDecoration(
-      
+      color: Colors.white,
       borderRadius: BorderRadius.circular(12), 
-      
       boxShadow: [
          BoxShadow(
           color: Colors.grey.withOpacity(0.15),
           spreadRadius: 10,
           blurRadius: 5,
           offset: Offset(0, 0), // changes position of shadow
-                                  ),
-                                 ],
-      ),
+        ),
+      ],
+    ),
     padding: EdgeInsets.all(15),
     height: 260,
     width: 320,
@@ -107,7 +106,7 @@ RecipesWidget(
           ]
         ),
         ),
-        ]
+      ]
     )
   );
 }
