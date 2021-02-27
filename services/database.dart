@@ -121,6 +121,16 @@ void createRecipe(String userId, String title, int prep, int servings, Map ingre
 }
 
 
+void vote(String id, int number) async{
+  
+  await FirebaseFirestore.instance.collection('recipes').doc(id).update({
+    "votes": number,
+  }).catchError((error) => print("Failed to add recipes: $error"));
+}
+
+
+
+
 
 
 
