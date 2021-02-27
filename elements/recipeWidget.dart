@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:recipes/style/style.dart';
-// ! Not working super well at the moment - needs to have isselected
 RecipesWidget(
-  // ! Could add image as preview image
   BuildContext context,
   String recipeTitle,
   String servings,
   String prepTime,
-  String ingredients,
-  String instructions,
   int upvotesNumber,
+  String image,
   StateSetter setState,
-  //Image asset
 ) {
-  // bool favorited;
-  // bool valueUp;
+
   return Container(
     margin: EdgeInsets.all(15),
     decoration: BoxDecoration(
@@ -46,7 +41,7 @@ RecipesWidget(
               ),
               
               
-              // ! Image goes here
+              
                 
               
               Row(
@@ -69,8 +64,7 @@ RecipesWidget(
           )
           )
         ),
-        Spacer(),
-        Text("Ingredients: " + ingredients, style: ingredientsRecipes),
+        Image.network(image, height: 117,),
         Padding(
           padding: EdgeInsets.only(top: 15),
           child: Row(
