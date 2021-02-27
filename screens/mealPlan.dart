@@ -7,6 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:recipes/elements/recipeWidget.dart';
 import 'package:recipes/screens/home.dart';
 import 'package:recipes/screens/shoppingList.dart';
+import 'package:intl/intl.dart';
+
+
+
 
 // Each day meal plan boxes class
 
@@ -58,6 +62,12 @@ class MealPlan extends StatefulWidget {
 }
 
 class MealPlanState extends State<MealPlan> {
+
+  // * date and time and weekdays
+
+  DateTime date = DateTime.now();
+  // date.weekday returns weekday
+
   String dropdownValue = '5 Days';
   @override
   Widget build(BuildContext context) {
