@@ -114,11 +114,11 @@ class CreateRecipeState extends State<CreateRecipe> {
             TextButton(
               child: Text('Add'),
               onPressed: () async {
-                CreateRecipeForm.ingredients.addAll({
+                CreateRecipeForm.ingredients["${CreateRecipeForm.ingredients.length}"] = {
                   "name" : NewIngredient.name, 
                   "amount" : NewIngredient.amount, 
                   "unit" : NewIngredient.unit,
-                });
+                };
                 Navigator.pop(context);
               },
             ),
@@ -197,176 +197,258 @@ class CreateRecipeState extends State<CreateRecipe> {
           children: [
                 
             pageTitle(context, "Create Recipe", false, true, setState),
-            SingleChildScrollView(
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                  children: [
-                    SizedBox(height:50),
-                    InkWell(
-                      child: Container(
-                        width: 170,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: redTheme,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children:[
-                            Icon(Icons.camera_alt, color: whiteFontColor,),
-                            Text("Scan Recipe", style: basicWhite,),
-                          ]
-                        )
-                      ),
-                      onTap: (){
-                        scanImage();
-                      },
-                    ),
-                    SizedBox(height:50),
-                    Container(
-                      child: TextFormField(
-                        style: basicBlack,
-                        decoration: textInputDecoration.copyWith(hintText: 'Recipe Title'),
-                        validator: (val) {
-                          if(val.isEmpty){
-                                return "prep time required";
-                              }
-                              else if(int.parse(val) == null || int.parse(val) == 0){
-                                return "please input number";
-                              }
-                              else{
-                                return null;
-                              }
-                        },
-                        onChanged: (val) {
-                          setState(() => CreateRecipeForm.title = val);
-                        },
-
-                      ),
-                    ),
-                    SizedBox(height:30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width*.4,
-                          child: TextFormField(
-                            style: basicBlack,
-                            decoration: textInputDecoration.copyWith(hintText: 'Prep Min'),
-                            validator: (val) {
-                              if(val.isEmpty){
-                                return "prep time required";
-                              }
-                              else if(int.parse(val) == null || int.parse(val) == 0){
-                                return "please input number";
-                              }
-                              else if(int.parse(val) > 360){
-                                return "too long(less than 6 hrs)";
-                              }
-                              else{
-                                return null;
-                              }
-                            },
-                            onChanged: (val) {
-                              setState(() => CreateRecipeForm.prepTime = int.parse(val));
-                            },
-
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
+                    children: [
+                      SizedBox(height:50),
+                      InkWell(
+                        child: Container(
+                          width: 170,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: redTheme,
+                            borderRadius: BorderRadius.circular(10),
                           ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children:[
+                              Icon(Icons.camera_alt, color: whiteFontColor,),
+                              Text("Scan Recipe", style: basicWhite,),
+                            ]
+                          )
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width*.4,
-                          child: TextFormField(
-                            style: basicBlack,
-                            decoration: textInputDecoration.copyWith(hintText: 'Servings'),
-                            validator: (val) {
-                              if(val.isEmpty){
-                                return "servings required";
-                              }
-                              else{
-                                return null;
-                              }
-                            },
-                            onChanged: (val) {
-                              setState(() => CreateRecipeForm.servings = int.parse(val));
-                            },
+                        onTap: (){
+                          scanImage();
+                        },
+                      ),
+                      SizedBox(height:50),
+                      Container(
+                        child: TextFormField(
+                          style: basicBlack,
+                          decoration: textInputDecoration.copyWith(hintText: 'Recipe Title'),
+                          validator: (val) {
+                            if(val.isEmpty){
+                                  return "prep time required";
+                                }
+                                else if(int.parse(val) == null || int.parse(val) == 0){
+                                  return "please input number";
+                                }
+                                else{
+                                  return null;
+                                }
+                          },
+                          onChanged: (val) {
+                            setState(() => CreateRecipeForm.title = val);
+                          },
 
+                        ),
+                      ),
+                      SizedBox(height:30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width*.4,
+                            child: TextFormField(
+                              style: basicBlack,
+                              decoration: textInputDecoration.copyWith(hintText: 'Prep Min'),
+                              validator: (val) {
+                                if(val.isEmpty){
+                                  return "prep time required";
+                                }
+                                else if(int.parse(val) == null || int.parse(val) == 0){
+                                  return "please input number";
+                                }
+                                else if(int.parse(val) > 360){
+                                  return "too long(less than 6 hrs)";
+                                }
+                                else{
+                                  return null;
+                                }
+                              },
+                              onChanged: (val) {
+                                setState(() => CreateRecipeForm.prepTime = int.parse(val));
+                              },
+
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height:30),
-                    InkWell(
-                      child: Container(
-                        width: 190,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: redTheme,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children:[
-                            Icon(Icons.add, color: whiteFontColor,),
-                            Text("Add Ingredient", style: basicWhite,),
-                          ]
-                        )
+                          Container(
+                            width: MediaQuery.of(context).size.width*.4,
+                            child: TextFormField(
+                              style: basicBlack,
+                              decoration: textInputDecoration.copyWith(hintText: 'Servings'),
+                              validator: (val) {
+                                if(val.isEmpty){
+                                  return "servings required";
+                                }
+                                else{
+                                  return null;
+                                }
+                              },
+                              onChanged: (val) {
+                                setState(() => CreateRecipeForm.servings = int.parse(val));
+                              },
+
+                            ),
+                          ),
+                        ],
                       ),
-                      onTap: (){
-                        ingredientPopUp();
-                      },
-                    ),
-                    SizedBox(height: 20,),
-                    InkWell(
-                      child: Container(
-                        width: 190,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: redTheme,
-                          borderRadius: BorderRadius.circular(10),
+                      ConstrainedBox(
+                        constraints: new BoxConstraints(
+                          minHeight: 10,
+                          maxHeight: 270,
+                          // maxWidth: 30.0,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children:[
-                            Icon(Icons.add, color: whiteFontColor,),
-                            Text("Add Step", style: basicWhite,),
-                          ]
-                        )
-                      ),
-                      onTap: (){
-                        stepPopUp();
-                      },
-                    ),
-                    SizedBox(height:50),
-                    InkWell(
-                      child: Container(
-                        width: 220,
-                        padding: EdgeInsets.all(21),
-                        decoration: BoxDecoration(
-                          color: redTheme,
-                          borderRadius: BorderRadius.circular(10),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: CreateRecipeForm.ingredients.length,
+                          itemBuilder: (context, index){
+                            return Container(
+                              margin: EdgeInsets.only(bottom: 12),
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(CreateRecipeForm.ingredients[index.toString()]["amount"].toString() + " " + CreateRecipeForm.ingredients[index.toString()]["unit"].toString() + " " + CreateRecipeForm.ingredients[index.toString()]["name"].toString(), style: basicBlackBold,),
+                                  IconButton(icon: Icon(Icons.close), onPressed: null)
+                                ],
+                              ),
+                            );
+                          },
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children:[
-                            Icon(Icons.fastfood_rounded, color: whiteFontColor,),
-                            Text("Publish Recipe", style: basicWhite,),
-                          ]
-                        )
                       ),
-                      onTap: () async{
-                        print(CreateRecipeForm.title);
-                        print(CreateRecipeForm.prepTime);
-                        print(CreateRecipeForm.servings);
-                        print(CreateRecipeForm.ingredients);
-                        print(CreateRecipeForm.steps);
-                        createRecipe(user.uid, CreateRecipeForm.title, CreateRecipeForm.prepTime, CreateRecipeForm.servings,CreateRecipeForm.ingredients, CreateRecipeForm.steps);
-                      },
-                    ),
-                  ],
-                )
-              ),
-            )
+                      InkWell(
+                        child: Container(
+                          width: 190,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: redTheme,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children:[
+                              Icon(Icons.add, color: whiteFontColor,),
+                              Text("Add Ingredient", style: basicWhite,),
+                            ]
+                          )
+                        ),
+                        onTap: (){
+                          ingredientPopUp();
+                        },
+                      ),
+                      ConstrainedBox(
+                        constraints: new BoxConstraints(
+                          minHeight: 10,
+                          maxHeight: 270,
+                          // maxWidth: 30.0,
+                        ),
+                        child:ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: CreateRecipeForm.steps.length,
+                          itemBuilder: (context, index){
+                            return Container(
+                              margin: EdgeInsets.only(bottom: 12),
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Step ${index+1}", style: basicBlackBold,),
+                                      Text(CreateRecipeForm.steps[index])
+                                    ],
+                                  ),
+                                  IconButton(icon: Icon(Icons.close), onPressed: null)
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      InkWell(
+                        child: Container(
+                          width: 190,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: redTheme,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children:[
+                              Icon(Icons.add, color: whiteFontColor,),
+                              Text("Add Step", style: basicWhite,),
+                            ]
+                          )
+                        ),
+                        onTap: (){
+                          stepPopUp();
+                        },
+                      ),
+                      
+                            
+                      SizedBox(height:50),
+                      InkWell(
+                        child: Container(
+                          width: 220,
+                          padding: EdgeInsets.all(21),
+                          decoration: BoxDecoration(
+                            color: redTheme,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children:[
+                              Icon(Icons.fastfood_rounded, color: whiteFontColor,),
+                              Text("Publish Recipe", style: basicWhite,),
+                            ]
+                          )
+                        ),
+                        onTap: () async{
+                          print(CreateRecipeForm.title);
+                          print(CreateRecipeForm.prepTime);
+                          print(CreateRecipeForm.servings);
+                          print(CreateRecipeForm.ingredients);
+                          print(CreateRecipeForm.steps);
+                          createRecipe(user.uid, CreateRecipeForm.title, CreateRecipeForm.prepTime, CreateRecipeForm.servings,CreateRecipeForm.ingredients, CreateRecipeForm.steps);
+                        },
+                      ),
+                      SizedBox(height: 10)
+                    ],
+                  )
+                ),
+              )
+            ),
           ]
         )
       )
