@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
 
                 // Row for favorites and folder of my recipes of user
                 Container(
-                  padding: EdgeInsets.only(bottom:30),
+                  padding: EdgeInsets.only(bottom:30,),
                   decoration: BoxDecoration(
                     // color: lightGrey,
                   ),

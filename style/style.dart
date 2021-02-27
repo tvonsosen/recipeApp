@@ -37,7 +37,7 @@ TextStyle chartTitle = new TextStyle(fontFamily: defaultFont, fontSize: 19, colo
 // ! For Recipe Widget
 TextStyle titleRecipes = new TextStyle(fontFamily: defaultFont, fontSize: 20, color: Colors.black, fontWeight: FontWeight.w800);
 TextStyle infoRecipes = new TextStyle(fontFamily: defaultFont, fontSize: 15, color: Colors.black, fontWeight: FontWeight.w700);
-TextStyle ingredientsRecipes = new TextStyle(fontFamily: defaultFont, fontSize: 12, color: Colors.grey, fontWeight: FontWeight.w700);
+TextStyle ingredientsRecipes = new TextStyle(fontFamily: defaultFont, fontSize: 15, color: Colors.grey, fontWeight: FontWeight.w700);
 
 
 TextStyle pageTitleStyle = new TextStyle(fontFamily: defaultFont, fontSize: 36, color: redTheme, fontWeight: FontWeight.w800);
