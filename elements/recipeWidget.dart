@@ -16,7 +16,9 @@ RecipesWidget(
   bool favorited;
   bool valueUp;
   return Container(
+    
     decoration: BoxDecoration(
+      
       borderRadius: BorderRadius.circular(12), 
       
       boxShadow: [
