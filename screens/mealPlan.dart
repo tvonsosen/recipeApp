@@ -103,10 +103,20 @@ class MealPlanState extends State<MealPlan> {
         )
              
             ),
-            Column(children: [
-              MealDays(context, 'Monday', 'Hot Dogs', setState)
+            // Column(children: [
+              
+            //   ListView(
+            //   padding: EdgeInsets.all(10),
+            //   children: [
 
-            ],)
+            //     MealDays(context, 'Monday', 'Hot Dogs', setState),
+            //     MealDays(context, 'Tuesday', 'Hot Dogs', setState),
+            //     MealDays(context, 'Wednesday', 'Hot Dogs', setState),
+            //     MealDays(context, 'Thursday', 'Hot Dogs', setState),
+            //     MealDays(context, 'Friday', 'Hot Dogs', setState),
+
+            // ],
+            // ), ],)
             ]
         )
       )

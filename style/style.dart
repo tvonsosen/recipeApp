@@ -40,7 +40,7 @@ TextStyle infoRecipes = new TextStyle(fontFamily: defaultFont, fontSize: 15, col
 TextStyle ingredientsRecipes = new TextStyle(fontFamily: defaultFont, fontSize: 15, color: Colors.grey, fontWeight: FontWeight.w700);
 
 //! For meal Days widget
-TextStyle mealPlanTitle = new TextStyle(fontFamily: defaultFont, fontSize: 30, color: Colors.black, fontWeight: FontWeight.w800);
+TextStyle mealPlanTitle = new TextStyle(fontFamily: defaultFont, fontSize: 30, color: Colors.white, fontWeight: FontWeight.w800);
 
 
 TextStyle pageTitleStyle = new TextStyle(fontFamily: defaultFont, fontSize: 36, color: redTheme, fontWeight: FontWeight.w800);
