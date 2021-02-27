@@ -9,7 +9,7 @@ RecipesWidget(
   String prepTime,
   String ingredients,
   String instructions,
-  double upvotesNumber,
+  int upvotesNumber,
   StateSetter setState,
   //Image asset
 ) {
