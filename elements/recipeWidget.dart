@@ -16,6 +16,11 @@ RecipesWidget(
   bool favorited;
   bool valueUp;
   return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(12), ),
+    padding: EdgeInsets.all(30),
+    height: 300,
+    width: 350,
     child: Column(
       children: [
         InkWell(
@@ -27,17 +32,20 @@ RecipesWidget(
                 recipeTitle,
                 style: titleRecipes,
               ),
+              
               // Where image would go
               Row(
+                
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Servings: " + servings,
                     style: infoRecipes,
                   ),
-                  Text("Prep Time:" + prepTime)
+                  Text("Prep Time: " + prepTime)
                 ],
               ),
-              Text("Ingredients:" + ingredients, style: ingredientsRecipes)
+              Text("Ingredients: " + ingredients, style: ingredientsRecipes)
             ],
             //upvote/downvote outside of inkwell
           )
