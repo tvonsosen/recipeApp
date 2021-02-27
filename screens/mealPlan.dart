@@ -32,9 +32,15 @@ MealDays (BuildContext context, String day, String mealNames, StateSetter setSta
         child: Padding(
         
           padding: EdgeInsets.all(10),
-          child: Text(day, style: mealPlanTitle)
-      )
+          
+          child: Text(day, style: mealPlanTitle),
+        
+           )
      ),
+      Spacer(),
+      IconButton(
+        icon: Icon(Icons.add),
+          iconSize: 30),
       ],)
 
   
@@ -109,7 +115,7 @@ class MealPlanState extends State<MealPlan> {
             //   padding: EdgeInsets.all(10),
             //   children: [
 
-            //     MealDays(context, 'Monday', 'Hot Dogs', setState),
+                MealDays(context, 'Monday', 'Hot Dogs', setState),
             //     MealDays(context, 'Tuesday', 'Hot Dogs', setState),
             //     MealDays(context, 'Wednesday', 'Hot Dogs', setState),
             //     MealDays(context, 'Thursday', 'Hot Dogs', setState),
