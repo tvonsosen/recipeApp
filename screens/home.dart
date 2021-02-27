@@ -117,28 +117,29 @@ class _HomePageState extends State<HomePage> {
                       if(!snapshot.hasData){
                         return Loading();
                       }
-                      List schedulesList = snapshot.data.docs.toList();
-                      return Container(
+                      List recipeList = snapshot.data.docs.toList();
+                      return Expanded(
+                        child: Column(
                         
                         // margin: EdgeInsets.only(left:15, right: 15),
 
                               
-                        child: Expanded(
-                          child: ListView.builder(
-                            // shrinkWrap: true,
-                            // clipBehavior: Clip.none,
-                            // scrollDirection: Axis.vertical,
-                            itemCount: schedulesList.length,
-                            itemBuilder: (context, index){
-                              return RecipesWidget(context, "Hot Dogs", "2", "20 min", "Hot Dogs and Buns", "Cook hot dogs, put into buns", 20, setState);
-                            }
-                          )
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: recipeList.length,
+                                itemBuilder: (context, index){
+                                  return RecipesWidget(context, recipeList[index]["title"], recipeList[index]["servings"].toString(), "${recipeList[index]["prep"].toString()} mins", recipeList[index]["title"], recipeList[index]["title"], recipeList[index]["votes"], setState);
+                                }
+                              )
+                            )
+                          ]
                         )
                       );
 
                     }
                   ),
-                )
+                ),
                 
                 
               ]
