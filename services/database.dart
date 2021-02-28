@@ -129,6 +129,13 @@ Future<List<String>> search(String query) async{
     return ids;
 }
 
+void uploadMealPlan(int epoch, String userId, String recipeId) async{
+    await FirebaseFirestore.instance.collection('mealPlanning').add({
+      'createdBy': userId,
+      'recipe': recipeId,
+      'time': epoch 
+    }).catchError((error)=>print("Failed to add meal plan: $error"));
+}
 
 void vote(String id, int number) async{
   
