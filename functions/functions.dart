@@ -44,8 +44,6 @@ Future scanImage(StateSetter setState) async {
   }else{
     throw Exception('Failed request');
   }
-  //Image image = Image.file(fileImage);
-  
 }
 
 Future saveImage() async{
@@ -57,7 +55,7 @@ Future saveImage() async{
 
 
 List getEpochs(int time){
-  int todayEarly = DateTime.parse("${DateFormat('yyyy-mm-dd').format(DateTime.now())} 00:00:01").millisecondsSinceEpoch;
+  int todayEarly = DateTime.parse("${DateFormat('yyyy-mm-dd').format(DateTime.now())}").millisecondsSinceEpoch;
   List returnList = [];
   for(int i = 0; i < time; i++){
     returnList.add(todayEarly+(86400000*i));
