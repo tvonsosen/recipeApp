@@ -1,4 +1,6 @@
+import 'package:intl/intl.dart';
 import 'package:recipes/elements/pageTitle.dart';
+import 'package:recipes/functions/functions.dart';
 import 'package:recipes/services/auth.dart';
 import 'package:recipes/shared/loading.dart';
 import 'package:recipes/style/style.dart';
@@ -10,8 +12,9 @@ import 'package:recipes/screens/shoppingList.dart';
 
 // Each day meal plan boxes class
 
-MealDays (BuildContext context, String day, String mealNames, StateSetter setState){
+MealPlanWidget(BuildContext context, String day, StateSetter setState){
   return Container(
+    margin: EdgeInsets.all(15),
     height: 160,
     width: 320,
     decoration: BoxDecoration(
@@ -23,22 +26,22 @@ MealDays (BuildContext context, String day, String mealNames, StateSetter setSta
         spreadRadius: 5,
         blurRadius: 1,
         offset: Offset(0, 0), // changes position of shadow
-                                ),
-                                ],
+        ),
+      ],
     ),
-    child: Column(children: [
-      Align(
-        alignment: Alignment.topLeft,
-        child: Padding(
-        
-          padding: EdgeInsets.all(10),
-          child: Text(day, style: mealPlanTitle)
-      )
-     ),
-      ],)
-
-  
-    );
+    child: Column(
+      children: [
+        Align(
+          alignment: Alignment.topLeft,
+          child: Padding(
+          
+            padding: EdgeInsets.all(10),
+            child: Text(day, style: mealPlanTitle)
+          )
+        ),
+      ],
+    )
+  );
     
   
 
@@ -49,7 +52,7 @@ class MealPlan extends StatefulWidget {
 }
 
 class MealPlanState extends State<MealPlan> {
-  String dropdownValue = '5 Days';
+  String dropdownValue = '5';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,16 +60,8 @@ class MealPlanState extends State<MealPlan> {
         child: Column(
           children: [
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 10, left: 10),
-                  child: pageTitle(
-                    context, "Meal Plan", false, false, setState),
-                    )
-                  ],
-                ),
+            pageTitle(context, "Meal Plan", false, false, setState),
+              
 
 
             Padding(
@@ -76,8 +71,8 @@ class MealPlanState extends State<MealPlan> {
                 alignment: Alignment.topRight,
                 child: DropdownButton(
                   value: dropdownValue,
-                  icon: Icon(Icons.arrow_downward),
-                  iconSize: 35,
+                  icon: Icon(Icons.arrow_drop_down),
+                  iconSize: 25,
                   elevation: 15,
                   style: TextStyle(color: redTheme),
                   underline: Container(
@@ -92,32 +87,28 @@ class MealPlanState extends State<MealPlan> {
                       dropdownValue = newValue;
                     });
                   },
-                  items: <String>['5 Days', '6 days', '7 days', '8 days', '9 days', '10 days']
+                  items: <String>['5', '6', '7', '8', '9', '10']
                     .map<DropdownMenuItem<String>>((String value){
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(value + " days"),
                       );
                     }).toList(),
+                )
               )
-        )
              
             ),
-            // Column(children: [
-              
-            //   ListView(
-            //   padding: EdgeInsets.all(10),
-            //   children: [
 
-            //     MealDays(context, 'Monday', 'Hot Dogs', setState),
-            //     MealDays(context, 'Tuesday', 'Hot Dogs', setState),
-            //     MealDays(context, 'Wednesday', 'Hot Dogs', setState),
-            //     MealDays(context, 'Thursday', 'Hot Dogs', setState),
-            //     MealDays(context, 'Friday', 'Hot Dogs', setState),
-
-            // ],
-            // ), ],)
-            ]
+            Expanded(
+              child: ListView.builder(
+                itemCount: getEpochs(int.parse(dropdownValue)).length,
+                itemBuilder: (context, index){
+                  return MealPlanWidget(context, DateFormat("EEEE").format(DateTime.fromMillisecondsSinceEpoch(getEpochs(int.parse(dropdownValue))[index])).toString(), setState);
+                },
+              )
+            )
+            
+          ]
         )
       )
         

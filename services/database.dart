@@ -113,8 +113,8 @@ void createRecipe(String userId, String title, int prep, int servings, Map ingre
     'servings': servings,
     'ingredients': ingredients,
     'steps': steps,
-    "votes": 1,
-    "image": await uploadFile(recipeImage)
+    'votes': 1,
+    'image': await uploadFile(recipeImage)
   }).catchError((error) => print("Failed to add recipes: $error"));
 
   // ! add to firestore

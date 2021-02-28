@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipes/models/createRecipeForm.dart';
+import 'package:intl/intl.dart';
 
 final picker = ImagePicker();
 String URL='https://5adfc1b462c1.ngrok.io/findRecipe'; // ! I have to reset this url every 2 hours due to the tunneling tool
@@ -41,4 +42,16 @@ Future saveImage() async{
   final pickedFile = await picker.getImage(source: ImageSource.gallery);
   File fileImage = File(pickedFile.path);
   CreateRecipeForm.recipeImage = fileImage;
+}
+
+
+
+List getEpochs(int time){
+  int todayEarly = DateTime.parse("${DateFormat('yyyy-mm-dd').format(DateTime.now())} 00:00:01").millisecondsSinceEpoch;
+  List returnList = [];
+  for(int i = 0; i < time; i++){
+    returnList.add(todayEarly+(86400000*i));
+  }
+  print(returnList);
+  return returnList;
 }
