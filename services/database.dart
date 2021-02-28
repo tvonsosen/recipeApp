@@ -137,7 +137,7 @@ Future<List<String>> search(String query) async{
   List<String> ids=List();
    QuerySnapshot querySnap=await FirebaseFirestore.instance.collection('recipes').get();
    querySnap.docs.forEach((doc) {
-          if(doc["title"].contains(query))ids.add(doc.id);  
+          if(doc["title"].toLowerCase().contains(query.toLowerCase()))ids.add(doc.id);  
     });
     return ids;
 }
