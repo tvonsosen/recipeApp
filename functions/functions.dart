@@ -8,11 +8,11 @@ import 'package:http/http.dart' as http;
 import 'package:recipes/models/createRecipeForm.dart';
 
 final picker = ImagePicker();
-String URL='https://5adfc1b462c1.ngrok.io/findRecipe'; // ! I have to reset this url every 2 hours due to the tunneling tool
+String URL='https://d64516092c87.ngrok.io/findRecipe'; // ! I have to reset this url every 2 hours due to the tunneling tool
 
 
 
-Future scanImage() async {
+Future scanImage(StateSetter setState) async {
   final pickedFile = await picker.getImage(source: ImageSource.gallery);  // ! change to camera for use on real phone
   File fileImage = File(pickedFile.path);
   final bytes=fileImage.readAsBytesSync();
@@ -24,11 +24,21 @@ Future scanImage() async {
 
   if(response.statusCode == 200){
     var result=jsonDecode(response.body);
+
+   setState((){
     CreateRecipeForm.title=result['title'];
-    CreateRecipeForm.ingredients=result['ingredients'];
+    result['ingredients'].forEach((obj){
+          CreateRecipeForm.ingredients["${CreateRecipeForm.ingredients.length}"] = {
+                  "name" : obj['desc'], 
+                  "amount" : obj['amount'], 
+                  "unit" : obj['measurment'],
+      }; 
+    });
     CreateRecipeForm.steps=result['instructions'];
     CreateRecipeForm.prepTime=0; // temporary value
     CreateRecipeForm.servings=int.parse(result['servings']);
+   });
+
 
   }else{
     throw Exception('Failed request');
