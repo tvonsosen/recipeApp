@@ -1,9 +1,8 @@
 import 'dart:io';
+import 'package:recipes/models/mealPlan.dart';
 import 'package:recipes/models/recipe.dart';
 import 'package:recipes/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:path/path.dart' as Path;  
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -69,8 +68,10 @@ class DatabaseUserService {
 
 
 
-
+// recipe service for stream
 class DatabaseRecipeService {
+
+  // conversion
   Recipe _recipeFromSnapshot(DocumentSnapshot snapshot) {
     return Recipe(
       uid: snapshot.data()["createdBy"],
@@ -98,7 +99,7 @@ class DatabaseRecipeService {
 
 
 
-
+// upload file
 Future<String> uploadFile(File _image) async {
   StorageReference storageReference = FirebaseStorage.instance
       .ref()
@@ -114,6 +115,7 @@ Future<String> uploadFile(File _image) async {
 }
 
 
+// new recipe
 void createRecipe(String userId, String title, int prep, int servings, Map ingredients, List steps, File recipeImage) async{
   
   DocumentReference ref = await FirebaseFirestore.instance.collection('recipes').add({
@@ -127,9 +129,10 @@ void createRecipe(String userId, String title, int prep, int servings, Map ingre
     'image': await uploadFile(recipeImage)
   }).catchError((error) => print("Failed to add recipes: $error"));
 
-  // ! add to firestore
 }
 
+
+// search
 Future<List<String>> search(String query) async{
   List<String> ids=List();
    QuerySnapshot querySnap=await FirebaseFirestore.instance.collection('recipes').get();
@@ -139,27 +142,46 @@ Future<List<String>> search(String query) async{
     return ids;
 }
 
+
+// upload meal plan
 void uploadMealPlan(int epoch, String userId, String recipeId) async{
-    await FirebaseFirestore.instance.collection('mealPlanning').add({
-      'createdBy': userId,
-      'recipe': recipeId,
-      'time': epoch 
-    }).catchError((error)=>print("Failed to add meal plan: $error"));
+  await FirebaseFirestore.instance.collection('mealPlan').add({
+    'createdBy': userId,
+    'recipeId': recipeId,
+    'time': epoch 
+  }).catchError((error)=>print("Failed to add meal plan: $error"));
 }
 
-Future<List<QueryDocumentSnapshot>> getMeals(String userId) async{
-    QuerySnapshot querySnap=await FirebaseFirestore.instance.collection('mealPlanning').where('createdBy',isEqualTo: userId).get();
-    return querySnap.docs;
+// get all meal plans with certain user
+Future getMeals(String userId) async{
+    QuerySnapshot querySnap=await FirebaseFirestore.instance.collection('mealPlan').where('createdBy',isEqualTo: userId).get();
+    // return querySnap.docs;
+  Meals.meals = querySnap.docs;
+
 }
 
+
+// get recipe by id
+Future<DocumentSnapshot> getRecipe(String recipe) async{
+    DocumentSnapshot query= await FirebaseFirestore.instance.collection('recipes').doc(recipe).get();
+    return query;
+}
+
+// change vote
 void vote(String id, int number) async{
-  
   await FirebaseFirestore.instance.collection('recipes').doc(id).update({
     "votes": number,
   }).catchError((error) => print("Failed to add recipes: $error"));
 }
 
 
+// add item to shopping cart
+void addToShoppingCart(String name, String userId) async{
+    await FirebaseFirestore.instance.collection('shoppingCart').add({
+      'createdBy': userId,
+      'name': name,
+    }).catchError((error)=>print("Failed to add meal plan: $error"));
+}
 
 
 

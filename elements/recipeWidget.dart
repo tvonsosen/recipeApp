@@ -27,7 +27,7 @@ RecipesWidget(
       ],
     ),
     padding: EdgeInsets.all(15),
-    height: 260,
+    height: 265,
     width: 320,
     child: Column(
       children: [
@@ -39,7 +39,7 @@ RecipesWidget(
             children: [
               Text(
                 recipeTitle,
-                style: titleRecipes,
+                style: basicBlackBold,
               ),
               
               
@@ -53,9 +53,9 @@ RecipesWidget(
                 children: [
                   Text(
                     "Servings: " + servings,
-                    style: infoRecipes,
+                    style: basicBlack,
                   ),
-                  Text("Prep Time: " + prepTime, style: infoRecipes),
+                  Text("Prep Time: " + prepTime, style: basicBlack),
                  
                 ],
               ),
@@ -86,7 +86,7 @@ RecipesWidget(
               iconSize: 35,
               onPressed: () => vote(id, upvotesNumber+1),
             ),
-            Text(upvotesNumber.toString(), style: ingredientsRecipes),
+            Text(upvotesNumber.toString(), style: basicSmallBlack),
             IconButton(
               icon: Icon(Icons.arrow_downward, color: Colors.black.withOpacity(0.7)),
               iconSize: 35,

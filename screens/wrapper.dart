@@ -30,7 +30,7 @@ class Wrapper extends StatelessWidget {
             ],
           ),
           bottomNavigationBar: Container(
-            // margin: CurrentDevice.hasNotch ? EdgeInsets.only(bottom:20) : null,
+            margin: EdgeInsets.only(bottom:20),
             child: new TabBar(
               tabs: [
                 Tab(

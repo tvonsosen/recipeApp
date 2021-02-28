@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:recipes/elements/pageTitle.dart';
 import 'package:recipes/functions/functions.dart';
 import 'package:recipes/models/createRecipeForm.dart';
 import 'package:recipes/models/newIngredient.dart';
 import 'package:recipes/models/user.dart';
-import 'package:recipes/services/auth.dart';
 import 'package:recipes/style/inputDecoration.dart';
 import 'package:recipes/style/style.dart';
 import 'package:flutter/material.dart';

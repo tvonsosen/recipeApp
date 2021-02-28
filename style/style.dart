@@ -33,18 +33,6 @@ TextStyle widgetTitle = new TextStyle(fontFamily: defaultFont, fontSize: 33, col
 TextStyle entryDataList = new TextStyle(fontFamily: defaultFont, fontSize: 20, color: darkFontColor, fontWeight: FontWeight.w500);
 TextStyle smallPageHeader = new TextStyle(fontFamily: defaultFont, fontSize: 34, color: darkFontColor, fontWeight: FontWeight.w600);
 TextStyle chartTitle = new TextStyle(fontFamily: defaultFont, fontSize: 19, color: darkFontColor, fontWeight: FontWeight.w400);
-
-// ! For Recipe Widget
-TextStyle titleRecipes = new TextStyle(fontFamily: defaultFont, fontSize: 20, color: Colors.black, fontWeight: FontWeight.w800);
-TextStyle infoRecipes = new TextStyle(fontFamily: defaultFont, fontSize: 15, color: Colors.black, fontWeight: FontWeight.w700);
-TextStyle ingredientsRecipes = new TextStyle(fontFamily: defaultFont, fontSize: 15, color: Colors.grey, fontWeight: FontWeight.w700);
-
-//! For meal Days widget
-TextStyle mealPlanTitle = new TextStyle(fontFamily: defaultFont, fontSize: 30, color: Colors.white, fontWeight: FontWeight.w800);
-
-//! For shopping List widget
-TextStyle unusedingredients = new TextStyle(fontFamily: defaultFont, fontSize: 20, color: Colors.grey, fontWeight: FontWeight.w700);
-
 TextStyle pageTitleStyle = new TextStyle(fontFamily: defaultFont, fontSize: 36, color: redTheme, fontWeight: FontWeight.w800);
 TextStyle basicBlack = new TextStyle(fontFamily: defaultFont, fontSize: 19, color: darkFontColor, fontWeight: FontWeight.w400);
 TextStyle basicWhite = new TextStyle(fontFamily: defaultFont, fontSize: 19, color: whiteFontColor, fontWeight: FontWeight.w400);
@@ -55,3 +43,6 @@ TextStyle basicRed = TextStyle(fontFamily: defaultFont, fontSize: 19, color: red
 TextStyle basicLargeBlack = new TextStyle(fontFamily: defaultFont, fontSize: 30, color: darkFontColor, fontWeight: FontWeight.w700);
 TextStyle basicBlackBold = new TextStyle(fontFamily: defaultFont, fontSize: 19, color: darkFontColor, fontWeight: FontWeight.w700);
 TextStyle error = TextStyle(fontFamily: defaultFont, fontSize: 19, color: red, fontWeight: FontWeight.w400, height: 1.55);
+TextStyle basicLargeWhite = new TextStyle(fontFamily: defaultFont, fontSize: 30, color: whiteFontColor, fontWeight: FontWeight.w700);
+TextStyle basicMediumBlack = new TextStyle(fontFamily: defaultFont, fontSize: 24, color: darkFontColor, fontWeight: FontWeight.w500);
+TextStyle basicSmallBlackBold = new TextStyle(fontFamily: defaultFont, fontSize: 15, color: darkFontColor, fontWeight: FontWeight.w800);

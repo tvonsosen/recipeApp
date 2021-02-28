@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:recipes/elements/pageTitle.dart';
 import 'package:recipes/screens/createRecipe.dart';
-import 'package:recipes/services/auth.dart';
 import 'package:recipes/shared/loading.dart';
 import 'package:recipes/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recipes/elements/recipeWidget.dart';
-import 'package:recipes/screens/mealPlan.dart';
-import 'package:recipes/screens/shoppingList.dart';
 
 class HomePage extends StatefulWidget {
   final Function toggleView;
@@ -19,8 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final AuthService _auth = AuthService();
-  final _formKey = GlobalKey<FormState>();
   String error = '';
   bool loading = false;
 

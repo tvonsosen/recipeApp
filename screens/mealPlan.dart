@@ -1,149 +1,17 @@
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:recipes/elements/pageTitle.dart';
 import 'package:recipes/functions/functions.dart';
-import 'package:recipes/models/recipe.dart';
-import 'package:recipes/services/auth.dart';
+import 'package:recipes/models/mealPlan.dart';
+import 'package:recipes/models/user.dart';
+import 'package:recipes/screens/assingRecipe.dart';
 import 'package:recipes/services/database.dart';
-import 'package:recipes/shared/loading.dart';
-import 'package:recipes/style/inputDecoration.dart';
 import 'package:recipes/style/style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:recipes/elements/recipeWidget.dart';
-import 'package:recipes/screens/home.dart';
-import 'package:recipes/screens/shoppingList.dart';
-import 'package:intl/intl.dart';
 
 
 
 
-// Each day meal plan boxes class
-
-searchResultsBuilder(List<String> searchResults){
-  return Expanded(
-    child: ListView.builder(
-      // shrinkWrap: true,
-      scrollDirection: Axis.vertical,
-      itemCount: searchResults.length,
-      itemBuilder: (contect, index){
-        // return StreamBuilder<Recipe>(
-        //   stream: DatabaseRecipeService().recipe(searchResults[index]),
-        //   builder: (context, snapshot) {
-        //     if(snapshot.hasData){
-        //       Recipe recipe = snapshot.data;
-        //       ListTile(
-        //         leading: Image.network(recipe.image),
-        //       );
-        //     }
-        //   }
-        // );
-        return Text("hi");
-      }
-    ),
-  );
-}
-
-addMealPopUp(BuildContext context){
-  bool results = false; 
-  List<String> searchResults;
-  String query = "";
-  return showDialog(
-    context: context,
-    barrierDismissible: false, 
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Add Step'),
-        content: StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    child: TextFormField(
-                      style: basicBlack,
-                      decoration: textInputDecoration.copyWith(hintText: 'Search by name'),
-                      validator: (val) {
-                        if(val.isEmpty){
-                          return "description required";
-                        }
-                        else{
-                          return null;
-                        }
-                      },
-                      onChanged: (val) {
-                        setState(() => query = val);
-                      },
-
-                    ),
-                  ),
-                  IconButton(icon: Icon(Icons.search), onPressed: () async{
-                    searchResults = await search(query);
-                    setState((){results = true;});
-                  }),
-                  results ? searchResultsBuilder(searchResults) : SizedBox(height:1),
-                ],
-              ),
-            );
-          }
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Cancel'),
-            onPressed: () async {
-
-              Navigator.pop(context);
-            },
-          ),
-          TextButton(
-            child: Text('Add'),
-            onPressed: () async {
-              // CreateRecipeForm.steps.add(step);
-              Navigator.pop(context);
-            },
-          ),
-          
-        ],
-      );
-    },
-  );
-}
-
-
-MealPlanWidget(BuildContext context, String day, StateSetter setState){
-  return Container(
-    margin: EdgeInsets.all(15),
-    height: 160,
-    width: 320,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(12),
-      border: Border.all(color: redTheme, width: 4),
-      boxShadow: [
-        BoxShadow(
-        color: redTheme,
-        spreadRadius: 5,
-        blurRadius: 1,
-        offset: Offset(0, 0), // changes position of shadow
-        ),
-      ],
-    ),
-    child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children:[
-            Text(day, style: mealPlanTitle),
-            IconButton(icon: Icon(Icons.add_box, color: Colors.white), onPressed: (){
-              addMealPopUp(context);
-            })
-          ]
-        )
-      ]
-    )
-  );
-    
-  
-
-}
 class MealPlan extends StatefulWidget {
   @override
   MealPlanState createState() => MealPlanState();
@@ -153,6 +21,7 @@ class MealPlanState extends State<MealPlan> {
   String dropdownValue = '5';
   @override
   Widget build(BuildContext context) {
+    UserID user = Provider.of<UserID>(context);
     return Scaffold(
       body: Container(
         child: Column(
@@ -201,7 +70,56 @@ class MealPlanState extends State<MealPlan> {
               child: ListView.builder(
                 itemCount: getEpochs(int.parse(dropdownValue)).length,
                 itemBuilder: (context, index){
-                  return MealPlanWidget(context, DateFormat("EEEE").format(DateTime.fromMillisecondsSinceEpoch(getEpochs(int.parse(dropdownValue))[index])).toString(), setState);
+                  return FutureBuilder(
+                    future: getMeals(user.uid),
+                    builder: (_, snapshot) {
+                      String recipeString = "";
+                      // print("Full meal stuff: ${Meals.meals}");
+                      if(Meals.meals == null || Meals.meals.length > 0 ){
+                        for(var item in Meals.meals){
+                          if(item.data()['time'] == getEpochs(int.parse(dropdownValue))[index]){
+                            recipeString = "$recipeString${item.data()['recipeId']}\n";
+                          }
+                        }
+                      }
+                      if(recipeString == ""){
+                        recipeString = "No Assigned Recipes";
+                      }
+
+                      return Container(
+                        margin: EdgeInsets.all(15),
+                        height: 160,
+                        width: 320,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: redTheme, width: 4),
+                          boxShadow: [
+                            BoxShadow(
+                              color: redTheme,
+                              spreadRadius: 5,
+                              blurRadius: 1,
+                              offset: Offset(0, 0), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children:[
+                                Text(DateFormat("EEEE").format(DateTime.fromMillisecondsSinceEpoch(getEpochs(int.parse(dropdownValue))[index])), style: basicLargeWhite),
+                                IconButton(icon: Icon(Icons.add_box, color: Colors.white), onPressed: (){
+                                  ActiveDay.day = getEpochs(int.parse(dropdownValue))[index];
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AssingRecipe()),);
+                                })
+                              ]
+                            ),
+                            Text(recipeString, style: basicWhite)
+                          ]
+                        )
+                      );
+                    }
+                  );
                 },
               )
             )
