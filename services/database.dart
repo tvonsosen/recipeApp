@@ -195,7 +195,10 @@ void addToShoppingCart(String name, String userId) async{
 
 
 
-
+void deleteShoppingCart(String docId) async{
+    await FirebaseFirestore.instance.collection('shoppingCart').doc(docId).delete()
+    .catchError((error)=>print("Failed to delete meal plan: $error"));
+}
 
 
 
