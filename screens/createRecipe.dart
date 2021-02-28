@@ -248,14 +248,12 @@ class CreateRecipeState extends State<CreateRecipe> {
                       SizedBox(height: 10,),
                       Container(
                         child: TextFormField(
+                          initialValue: CreateRecipeForm.title,
                           style: basicBlack,
                           decoration: textInputDecoration.copyWith(hintText: 'Recipe Title'),
                           validator: (val) {
                             if(val.isEmpty){
-                                  return "prep time required";
-                                }
-                                else if(int.parse(val) == null || int.parse(val) == 0){
-                                  return "please input number";
+                                  return "title required";
                                 }
                                 else{
                                   return null;
@@ -274,6 +272,7 @@ class CreateRecipeState extends State<CreateRecipe> {
                           Container(
                             width: MediaQuery.of(context).size.width*.4,
                             child: TextFormField(
+                              initialValue: CreateRecipeForm.prepTime.toString(),
                               style: basicBlack,
                               decoration: textInputDecoration.copyWith(hintText: 'Prep Min'),
                               validator: (val) {
@@ -299,6 +298,7 @@ class CreateRecipeState extends State<CreateRecipe> {
                           Container(
                             width: MediaQuery.of(context).size.width*.4,
                             child: TextFormField(
+                              initialValue: CreateRecipeForm.servings.toString(),
                               style: basicBlack,
                               decoration: textInputDecoration.copyWith(hintText: 'Servings'),
                               validator: (val) {

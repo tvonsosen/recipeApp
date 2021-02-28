@@ -50,7 +50,8 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: EdgeInsets.only(top: 20, bottom: 25),
                       child: pageTitle(
-                          context, "Recipes", true, false, setState),
+                        context, "Recipes", true, false, setState
+                      ),
                     )
                   ],
                 ),

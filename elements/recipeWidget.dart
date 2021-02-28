@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipes/screens/viewRecipe.dart';
 import 'package:recipes/services/database.dart';
 import 'package:recipes/style/style.dart';
 RecipesWidget(
@@ -32,76 +33,58 @@ RecipesWidget(
     child: Column(
       children: [
         InkWell(
-        onTap: () {},
-        child: Container(
-          child: Column(
-            
-            children: [
-              Text(
-                recipeTitle,
-                style: basicBlackBold,
-              ),
-              
-              
-              
-                
-              
-              Row(
-                
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                
-                children: [
-                  Text(
-                    "Servings: " + servings,
-                    style: basicBlack,
-                  ),
-                  Text("Prep Time: " + prepTime, style: basicBlack),
-                 
-                ],
-              ),
-              
-              //Text("Ingredients: " + ingredients, style: ingredientsRecipes)
-            ],
-            //upvote/downvote outside of inkwell
-          )
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ViewRecipe()),
+            );
+          },
+          child: Container(
+            child: Column(
+              children: [
+                Text(
+                  recipeTitle,
+                  style: basicBlackBold,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Servings: " + servings,
+                      style: basicBlack,
+                    ),
+                    Text("Prep Time: " + prepTime, style: basicBlack),
+                  ],
+                ),
+                Image.network(image, height: 117,),
+              ],
+            )
           )
         ),
-        Image.network(image, height: 117,),
         Padding(
           padding: EdgeInsets.only(top: 15),
           child: Row(
           
-          children: [
-            
-            // ToggleButtons(
-            //   isSelected: [true, true],
-            //   color: Colors.black.withOpacity(0.7),
-            //   children: [
-            //     Icon(Icons.arrow_upward), 
-            //     Icon(Icons.arrow_downward)
-            //   ],
-            // ),
-            IconButton(
-              icon: Icon(Icons.arrow_upward, color: Colors.black.withOpacity(0.7)),
-              iconSize: 35,
-              onPressed: () => vote(id, upvotesNumber+1),
-            ),
-            Text(upvotesNumber.toString(), style: basicSmallBlack),
-            IconButton(
-              icon: Icon(Icons.arrow_downward, color: Colors.black.withOpacity(0.7)),
-              iconSize: 35,
-              onPressed: () => vote(id, upvotesNumber-1),
-            ),
-            
-            
-            Spacer(flex: 7),
-            IconButton(
+            children: [
               
-              icon: Icon(Icons.star, color: Colors.black.withOpacity(0.7)),
-              iconSize: 35
-            )
-          ]
-        ),
+              IconButton(
+                icon: Icon(Icons.arrow_upward, color: Colors.black.withOpacity(0.7)),
+                iconSize: 35,
+                onPressed: () => vote(id, upvotesNumber+1),
+              ),
+              Text(upvotesNumber.toString(), style: basicSmallBlack),
+              IconButton(
+                icon: Icon(Icons.arrow_downward, color: Colors.black.withOpacity(0.7)),
+                iconSize: 35,
+                onPressed: () => vote(id, upvotesNumber-1),
+              ),
+              
+              
+              Spacer(flex: 7),
+              Icon(Icons.star, color: Colors.black.withOpacity(0.7)),
+                
+            ]
+          ),
         ),
       ]
     )
