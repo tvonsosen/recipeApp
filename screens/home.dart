@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                 
                 Container(
                   child: StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection('recipes').snapshots(),
+                    stream: FirebaseFirestore.instance.collection('recipes').orderBy("votes", descending: true).snapshots(),
                     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
                       // for(var item in snapshot.data.docs){
                       //   print(item.id);
