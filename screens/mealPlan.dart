@@ -18,19 +18,22 @@ import 'package:recipes/screens/shoppingList.dart';
 searchResultsBuilder(List<String> searchResults){
   return Expanded(
     child: ListView.builder(
+      // shrinkWrap: true,
+      scrollDirection: Axis.vertical,
       itemCount: searchResults.length,
       itemBuilder: (contect, index){
-        return StreamBuilder<Recipe>(
-          stream: DatabaseRecipeService().recipe(searchResults[index]),
-          builder: (context, snapshot) {
-            if(snapshot.hasData){
-              Recipe recipe = snapshot.data;
-              ListTile(
-                leading: Image.network(recipe.image),
-              );
-            }
-          }
-        );
+        // return StreamBuilder<Recipe>(
+        //   stream: DatabaseRecipeService().recipe(searchResults[index]),
+        //   builder: (context, snapshot) {
+        //     if(snapshot.hasData){
+        //       Recipe recipe = snapshot.data;
+        //       ListTile(
+        //         leading: Image.network(recipe.image),
+        //       );
+        //     }
+        //   }
+        // );
+        return Text("hi");
       }
     ),
   );

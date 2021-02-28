@@ -9,7 +9,5 @@ class Recipe {
   final String title;
   final int votes;
   // final int strength;
-
   Recipe({ this.uid, this.image, this.ingredients, this.prep, this.servings, this.steps, this.title, this.votes});
-
 }
