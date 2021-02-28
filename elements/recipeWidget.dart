@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipes/services/database.dart';
 import 'package:recipes/style/style.dart';
 RecipesWidget(
   BuildContext context,
@@ -7,6 +8,7 @@ RecipesWidget(
   String prepTime,
   int upvotesNumber,
   String image,
+  String id,
   StateSetter setState,
 ) {
 
@@ -81,13 +83,14 @@ RecipesWidget(
             // ),
             IconButton(
               icon: Icon(Icons.arrow_upward, color: Colors.black.withOpacity(0.7)),
-              iconSize: 35
+              iconSize: 35,
+              onPressed: () => vote(id, upvotesNumber+1),
             ),
             Text(upvotesNumber.toString(), style: ingredientsRecipes),
             IconButton(
               icon: Icon(Icons.arrow_downward, color: Colors.black.withOpacity(0.7)),
-              
-              iconSize: 35
+              iconSize: 35,
+              onPressed: () => vote(id, upvotesNumber-1),
             ),
             
             

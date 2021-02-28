@@ -7,13 +7,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipes/models/createRecipeForm.dart';
 import 'package:intl/intl.dart';
+import 'package:date_format/date_format.dart';
 
 final picker = ImagePicker();
-String URL='https://5adfc1b462c1.ngrok.io/findRecipe'; // ! I have to reset this url every 2 hours due to the tunneling tool
+String URL='https://d64516092c87.ngrok.io/findRecipe'; // ! I have to reset this url every 2 hours due to the tunneling tool
 
 
 
-Future scanImage() async {
+Future scanImage(StateSetter setState) async {
   final pickedFile = await picker.getImage(source: ImageSource.gallery);  // ! change to camera for use on real phone
   File fileImage = File(pickedFile.path);
   final bytes=fileImage.readAsBytesSync();
@@ -25,17 +26,25 @@ Future scanImage() async {
 
   if(response.statusCode == 200){
     var result=jsonDecode(response.body);
+
+   setState((){
     CreateRecipeForm.title=result['title'];
-    CreateRecipeForm.ingredients=result['ingredients'];
+    result['ingredients'].forEach((obj){
+          CreateRecipeForm.ingredients["${CreateRecipeForm.ingredients.length}"] = {
+                  "name" : obj['desc'], 
+                  "amount" : obj['amount'], 
+                  "unit" : obj['measurment'],
+      }; 
+    });
     CreateRecipeForm.steps=result['instructions'];
     CreateRecipeForm.prepTime=0; // temporary value
     CreateRecipeForm.servings=int.parse(result['servings']);
+   });
+
 
   }else{
     throw Exception('Failed request');
   }
-  //Image image = Image.file(fileImage);
-  
 }
 
 Future saveImage() async{
@@ -46,8 +55,12 @@ Future saveImage() async{
 
 
 
-List daysBack(durationMeals) {
-  DateTime date = DateTime.now();
-  int earlyEpoch = DateTime.parse('${date.month}/${date.day}/${date.year} 0:00:01').millisecondsSinceEpoch;
-  // for(i in durationMeals)
+List getEpochs(int time){
+  int todayEarly = (DateTime.parse(formatDate(DateTime.now(), [yyyy, "-", mm, "-", dd]) +  " 00:00:01").millisecondsSinceEpoch.toInt());
+  List returnList = [];
+  for(int i = 0; i < time; i++){
+    returnList.add(todayEarly+(86400000*i));
+  }
+  print(returnList);
+  return returnList;
 }

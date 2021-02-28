@@ -1,6 +1,11 @@
+import 'package:intl/intl.dart';
 import 'package:recipes/elements/pageTitle.dart';
+import 'package:recipes/functions/functions.dart';
+import 'package:recipes/models/recipe.dart';
 import 'package:recipes/services/auth.dart';
+import 'package:recipes/services/database.dart';
 import 'package:recipes/shared/loading.dart';
+import 'package:recipes/style/inputDecoration.dart';
 import 'package:recipes/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,8 +19,96 @@ import 'package:intl/intl.dart';
 
 // Each day meal plan boxes class
 
-MealDays (BuildContext context, String day, String mealNames, StateSetter setState){
+searchResultsBuilder(List<String> searchResults){
+  return Expanded(
+    child: ListView.builder(
+      itemCount: searchResults.length,
+      itemBuilder: (contect, index){
+        return StreamBuilder<Recipe>(
+          stream: DatabaseRecipeService().recipe(searchResults[index]),
+          builder: (context, snapshot) {
+            if(snapshot.hasData){
+              Recipe recipe = snapshot.data;
+              ListTile(
+                leading: Image.network(recipe.image),
+              );
+            }
+          }
+        );
+      }
+    ),
+  );
+}
+
+addMealPopUp(BuildContext context){
+  bool results = false; 
+  List<String> searchResults;
+  String query = "";
+  return showDialog(
+    context: context,
+    barrierDismissible: false, 
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Add Step'),
+        content: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    child: TextFormField(
+                      style: basicBlack,
+                      decoration: textInputDecoration.copyWith(hintText: 'Search by name'),
+                      validator: (val) {
+                        if(val.isEmpty){
+                          return "description required";
+                        }
+                        else{
+                          return null;
+                        }
+                      },
+                      onChanged: (val) {
+                        setState(() => query = val);
+                      },
+
+                    ),
+                  ),
+                  IconButton(icon: Icon(Icons.search), onPressed: () async{
+                    searchResults = await search(query);
+                    setState((){results = true;});
+                  }),
+                  results ? searchResultsBuilder(searchResults) : SizedBox(height:1),
+                ],
+              ),
+            );
+          }
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Cancel'),
+            onPressed: () async {
+
+              Navigator.pop(context);
+            },
+          ),
+          TextButton(
+            child: Text('Add'),
+            onPressed: () async {
+              // CreateRecipeForm.steps.add(step);
+              Navigator.pop(context);
+            },
+          ),
+          
+        ],
+      );
+    },
+  );
+}
+
+
+MealPlanWidget(BuildContext context, String day, StateSetter setState){
   return Container(
+    margin: EdgeInsets.all(15),
     height: 160,
     width: 320,
     decoration: BoxDecoration(
@@ -27,31 +120,23 @@ MealDays (BuildContext context, String day, String mealNames, StateSetter setSta
         spreadRadius: 5,
         blurRadius: 1,
         offset: Offset(0, 0), // changes position of shadow
-                                ),
-                                ],
+        ),
+      ],
     ),
-    child: Column(children: [
-      Align(
-        alignment: Alignment.topLeft,
-        child: Padding(
-        
-          padding: EdgeInsets.all(10),
-          
-          child: Text(day, style: mealPlanTitle),
-        
-           )
-     ),
-      Spacer(),
-      Align(
-        alignment: Alignment.bottomRight,
-        child: IconButton(
-          icon: Icon(Icons.add, color: Colors.white),
-            iconSize: 30),
-    ),
-    ],)
-
-  
-    );
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children:[
+            Text(day, style: mealPlanTitle),
+            IconButton(icon: Icon(Icons.add_box, color: Colors.white), onPressed: (){
+              addMealPopUp(context);
+            })
+          ]
+        )
+      ]
+    )
+  );
     
   
 
@@ -62,14 +147,7 @@ class MealPlan extends StatefulWidget {
 }
 
 class MealPlanState extends State<MealPlan> {
-
-  // * date and time and weekdays
-
-  // DateTime date = DateTime.now();
-  // date.weekday returns weekday
-  // List weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-  String dropdownValue = '5 Days';
+  String dropdownValue = '5';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,16 +155,8 @@ class MealPlanState extends State<MealPlan> {
         child: Column(
           children: [
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 10, left: 10),
-                  child: pageTitle(
-                    context, "Meal Plan", false, false, setState),
-                    )
-                  ],
-                ),
+            pageTitle(context, "Meal Plan", false, false, setState),
+              
 
 
             Padding(
@@ -96,8 +166,8 @@ class MealPlanState extends State<MealPlan> {
                 alignment: Alignment.topRight,
                 child: DropdownButton(
                   value: dropdownValue,
-                  icon: Icon(Icons.arrow_downward),
-                  iconSize: 35,
+                  icon: Icon(Icons.arrow_drop_down),
+                  iconSize: 25,
                   elevation: 15,
                   style: TextStyle(color: redTheme),
                   underline: Container(
@@ -112,36 +182,28 @@ class MealPlanState extends State<MealPlan> {
                       dropdownValue = newValue;
                     });
                   },
-                  items: <String>['5 Days', '6 days', '7 days', '8 days', '9 days', '10 days']
+                  items: <String>['5', '6', '7', '8', '9', '10']
                     .map<DropdownMenuItem<String>>((String value){
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(value + " days"),
                       );
                     }).toList(),
+                )
               )
-
-        ),
              
             ),
-        ListView.builder(
 
-        )
-            // Column(children: [
-              
-            //   ListView(
-            //   padding: EdgeInsets.all(10),
-            //   children: [
-
-            //   MealDays(context, 'Monday', 'Hot Dogs', setState),
-            //     MealDays(context, 'Tuesday', 'Hot Dogs', setState),
-            //     MealDays(context, 'Wednesday', 'Hot Dogs', setState),
-            //     MealDays(context, 'Thursday', 'Hot Dogs', setState),
-            //     MealDays(context, 'Friday', 'Hot Dogs', setState),
-
-            // ],
-            // ), ],)
-            ]
+            Expanded(
+              child: ListView.builder(
+                itemCount: getEpochs(int.parse(dropdownValue)).length,
+                itemBuilder: (context, index){
+                  return MealPlanWidget(context, DateFormat("EEEE").format(DateTime.fromMillisecondsSinceEpoch(getEpochs(int.parse(dropdownValue))[index])).toString(), setState);
+                },
+              )
+            )
+            
+          ]
         )
       )
         

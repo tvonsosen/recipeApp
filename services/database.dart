@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:recipes/models/recipe.dart';
 import 'package:recipes/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -55,27 +56,10 @@ class DatabaseUserService {
 
 
 
+  
 
 
 
-  // // user data from snapshots
-  // UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-  //   return UserData(
-  //     uid: uid,
-  //     firstName: snapshot.data()['firstName'],
-  //     lastName: snapshot.data()['lastName'],
-  //     email: snapshot.data()['email'],
-  //   );
-  // }
-
-
-
-  // // get user doc stream
-  // Stream<UserData> get userData {
-  //   // print(uid);
-  //   return userCollection.doc(uid).snapshots()
-  //     .map(_userDataFromSnapshot);
-  // }
 
 
 
@@ -83,6 +67,32 @@ class DatabaseUserService {
 }
 
 
+
+
+
+class DatabaseRecipeService {
+  Recipe _recipeFromSnapshot(DocumentSnapshot snapshot) {
+    return Recipe(
+      uid: snapshot.data()["createdBy"],
+      image: snapshot.data()["image"],
+      ingredients: snapshot.data()["ingredients"],
+      prep: snapshot.data()["prep"],
+      servings: snapshot.data()["servings"],
+      steps: snapshot.data()["steps"],
+      title: snapshot.data()["title"],
+      votes: snapshot.data()["votes"],
+
+    );
+  }
+
+
+
+  // get user doc stream
+  Stream<Recipe> recipe(String id) {
+    return FirebaseFirestore.instance.collection('recipes').doc(id).snapshots()
+      .map(_recipeFromSnapshot);
+  }
+}
 
 
 
@@ -113,12 +123,38 @@ void createRecipe(String userId, String title, int prep, int servings, Map ingre
     'servings': servings,
     'ingredients': ingredients,
     'steps': steps,
-    "votes": 1,
-    "image": await uploadFile(recipeImage)
+    'votes': 1,
+    'image': await uploadFile(recipeImage)
   }).catchError((error) => print("Failed to add recipes: $error"));
 
   // ! add to firestore
 }
+
+Future<List<String>> search(String query) async{
+  List<String> ids=List();
+   QuerySnapshot querySnap=await FirebaseFirestore.instance.collection('recipes').get();
+   querySnap.docs.forEach((doc) {
+          if(doc["title"].contains(query))ids.add(doc.id);  
+    });
+    return ids;
+}
+
+void uploadMealPlan(int epoch, String userId, String recipeId) async{
+    await FirebaseFirestore.instance.collection('mealPlanning').add({
+      'createdBy': userId,
+      'recipe': recipeId,
+      'time': epoch 
+    }).catchError((error)=>print("Failed to add meal plan: $error"));
+}
+
+void vote(String id, int number) async{
+  
+  await FirebaseFirestore.instance.collection('recipes').doc(id).update({
+    "votes": number,
+  }).catchError((error) => print("Failed to add recipes: $error"));
+}
+
+
 
 
 
