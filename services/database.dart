@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:recipes/models/assigningRecipe.dart';
 import 'package:recipes/models/mealPlan.dart';
 import 'package:recipes/models/recipe.dart';
 import 'package:recipes/models/user.dart';
@@ -177,6 +178,12 @@ Future<DocumentSnapshot> getRecipe(String recipe) async{
     return query;
 }
 
+
+Future getRecipeForPage(String recipe) async{
+    DocumentSnapshot query= await FirebaseFirestore.instance.collection('recipes').doc(recipe).get();
+    AssignedRecipe.data = query.data();
+}
+
 // change vote
 void vote(String id, int number) async{
   await FirebaseFirestore.instance.collection('recipes').doc(id).update({
@@ -187,15 +194,15 @@ void vote(String id, int number) async{
 
 // add item to shopping cart
 void addToShoppingCart(String name, String userId) async{
-    await FirebaseFirestore.instance.collection('shoppingCart').add({
-      'createdBy': userId,
-      'name': name,
-    }).catchError((error)=>print("Failed to add meal plan: $error"));
+  await FirebaseFirestore.instance.collection('shoppingCart').add({
+    'createdBy': userId,
+    'name': name,
+  }).catchError((error)=>print("Failed to add meal plan: $error"));
 }
 
 
 
-void deleteShoppingCart(String docId) async{
+void deleteItemInCart(String docId) async{
     await FirebaseFirestore.instance.collection('shoppingCart').doc(docId).delete()
     .catchError((error)=>print("Failed to delete meal plan: $error"));
 }

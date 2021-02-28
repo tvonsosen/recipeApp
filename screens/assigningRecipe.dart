@@ -12,12 +12,12 @@ import 'package:flutter/material.dart';
 
 
 
-class AssingRecipe extends StatefulWidget {
+class AssigningRecipe extends StatefulWidget {
   @override
-  AssingRecipeState createState() => AssingRecipeState();
+  AssigningRecipeState createState() => AssigningRecipeState();
 }
 
-class AssingRecipeState extends State<AssingRecipe> {
+class AssigningRecipeState extends State<AssigningRecipe> {
   bool results = false; 
   List<String> searchResults;
   String query = "";

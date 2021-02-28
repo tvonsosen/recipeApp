@@ -5,7 +5,7 @@ import 'package:recipes/elements/pageTitle.dart';
 import 'package:recipes/functions/functions.dart';
 import 'package:recipes/models/mealPlan.dart';
 import 'package:recipes/models/user.dart';
-import 'package:recipes/screens/assingRecipe.dart';
+import 'package:recipes/screens/assigningRecipe.dart';
 import 'package:recipes/services/database.dart';
 import 'package:recipes/style/style.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +117,7 @@ class MealPlanState extends State<MealPlan> {
                                     Text(DateFormat("EEEE").format(DateTime.fromMillisecondsSinceEpoch(getEpochs(int.parse(dropdownValue))[index])), style: basicLargeWhite),
                                     IconButton(icon: Icon(Icons.add_box, color: Colors.white), onPressed: (){
                                       ActiveDay.day = getEpochs(int.parse(dropdownValue))[index];
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => AssingRecipe()),);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => AssigningRecipe()),);
                                     })
                                   ]
                                 ),

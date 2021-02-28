@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipes/models/assigningRecipe.dart';
 import 'package:recipes/screens/viewRecipe.dart';
 import 'package:recipes/services/database.dart';
 import 'package:recipes/style/style.dart';
@@ -38,6 +39,7 @@ RecipesWidget(
               context,
               MaterialPageRoute(builder: (context) => ViewRecipe()),
             );
+            AssignedRecipe.id = id;
           },
           child: Container(
             child: Column(
