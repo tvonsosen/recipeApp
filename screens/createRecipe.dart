@@ -226,9 +226,12 @@ class CreateRecipeState extends State<CreateRecipe> {
                         ),
                         onTap: () async{
                           await scanImage(setState);
-                          servingsControl.text = CreateRecipeForm.servings.toString();
-                          prepControl.text = CreateRecipeForm.prepTime.toString();
-                          titleControl.text = CreateRecipeForm.title;
+                          setState((){
+                            servingsControl.text = CreateRecipeForm.servings.toString();
+                            prepControl.text = CreateRecipeForm.prepTime.toString();
+                            titleControl.text = CreateRecipeForm.title;
+                            // titleControl.
+                          });
                         },
                       ),
                       SizedBox(height:50),

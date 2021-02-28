@@ -8,7 +8,7 @@ import 'package:recipes/models/createRecipeForm.dart';
 import 'package:date_format/date_format.dart';
 
 final picker = ImagePicker();
-String URL='https://5ae9ba4cdaa8.ngrok.io/findRecipe'; // ! I have to reset this url every 2 hours due to the tunneling tool
+String URL='https://2a19402a0c36.ngrok.io/findRecipe'; // ! I have to reset this url every 2 hours due to the tunneling tool
 
 
 
