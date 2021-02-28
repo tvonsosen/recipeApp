@@ -30,17 +30,17 @@ class CreateRecipeState extends State<CreateRecipe> {
                 child: Column(
                   children: [
                     Container(
-                      child: TextFormField(
+                      child: TextField(
                         style: basicBlack,
                         decoration: textInputDecoration.copyWith(hintText: 'Ingredient Title'),
-                        validator: (val) {
-                          if(val.isEmpty){
-                            return "ingredient required";
-                          }
-                          else{
-                            return null;
-                          }
-                        },
+                        // validator: (val) {
+                        //   if(val.isEmpty){
+                        //     return "ingredient required";
+                        //   }
+                        //   else{
+                        //     return null;
+                        //   }
+                        // },
                         onChanged: (val) {
                           setState(() => NewIngredient.name = val);
                         },
@@ -53,17 +53,17 @@ class CreateRecipeState extends State<CreateRecipe> {
                       children:[
                         Container(
                           width: MediaQuery.of(context).size.width*.25,
-                          child: TextFormField(
+                          child: TextField(
                             style: basicBlack,
                             decoration: textInputDecoration.copyWith(hintText: 'amount'),
-                            validator: (val) {
-                              if(val.isEmpty){
-                                return "amount required";
-                              }
-                              else{
-                                return null;
-                              }
-                            },
+                            // validator: (val) {
+                            //   if(val.isEmpty){
+                            //     return "amount required";
+                            //   }
+                            //   else{
+                            //     return null;
+                            //   }
+                            // },
                             onChanged: (val) {
                               setState(() => NewIngredient.amount = int.parse(val));
                             },
@@ -141,17 +141,17 @@ class CreateRecipeState extends State<CreateRecipe> {
                 child: Column(
                   children: [
                     Container(
-                      child: TextFormField(
+                      child: TextField(
                         style: basicBlack,
                         decoration: textInputDecoration.copyWith(hintText: 'Step Description'),
-                        validator: (val) {
-                          if(val.isEmpty){
-                            return "description required";
-                          }
-                          else{
-                            return null;
-                          }
-                        },
+                        // validator: (val) {
+                        //   if(val.isEmpty){
+                        //     return "description required";
+                        //   }
+                        //   else{
+                        //     return null;
+                        //   }
+                        // },
                         onChanged: (val) {
                           setState(() => step = val);
                         },
@@ -227,10 +227,10 @@ class CreateRecipeState extends State<CreateRecipe> {
                         onTap: () async{
                           await scanImage(setState);
                           setState((){
+                            print(CreateRecipeForm.servings.toString());
                             servingsControl.text = CreateRecipeForm.servings.toString();
                             prepControl.text = CreateRecipeForm.prepTime.toString();
                             titleControl.text = CreateRecipeForm.title;
-                            // titleControl.
                           });
                         },
                       ),
@@ -258,18 +258,18 @@ class CreateRecipeState extends State<CreateRecipe> {
                       ),
                       SizedBox(height: 10,),
                       Container(
-                        child: TextFormField(
+                        child: TextField(
                           controller: titleControl,
                           style: basicBlack,
                           decoration: textInputDecoration.copyWith(hintText: 'Recipe Title'),
-                          validator: (val) {
-                            if(val.isEmpty){
-                                  return "title required";
-                                }
-                                else{
-                                  return null;
-                                }
-                          },
+                          // validator: (val) {
+                          //   if(val.isEmpty){
+                          //         return "title required";
+                          //       }
+                          //       else{
+                          //         return null;
+                          //       }
+                          // },
                           onChanged: (val) {
                             setState(() => CreateRecipeForm.title = val);
                           },
@@ -282,24 +282,24 @@ class CreateRecipeState extends State<CreateRecipe> {
                         children: [
                           Container(
                             width: MediaQuery.of(context).size.width*.4,
-                            child: TextFormField(
+                            child: TextField(
                               controller: prepControl,
                               style: basicBlack,
                               decoration: textInputDecoration.copyWith(hintText: 'Prep Min'),
-                              validator: (val) {
-                                if(val.isEmpty){
-                                  return "prep time required";
-                                }
-                                else if(int.parse(val) == null || int.parse(val) == 0){
-                                  return "please input number";
-                                }
-                                else if(int.parse(val) > 360){
-                                  return "too long(less than 6 hrs)";
-                                }
-                                else{
-                                  return null;
-                                }
-                              },
+                              // validator: (val) {
+                              //   if(val.isEmpty){
+                              //     return "prep time required";
+                              //   }
+                              //   else if(int.parse(val) == null || int.parse(val) == 0){
+                              //     return "please input number";
+                              //   }
+                              //   else if(int.parse(val) > 360){
+                              //     return "too long(less than 6 hrs)";
+                              //   }
+                              //   else{
+                              //     return null;
+                              //   }
+                              // },
                               onChanged: (val) {
                                 setState(() => CreateRecipeForm.prepTime = int.parse(val));
                               },
@@ -308,21 +308,21 @@ class CreateRecipeState extends State<CreateRecipe> {
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width*.4,
-                            child: TextFormField(
+                            child: TextField(
                               controller: servingsControl,
                               style: basicBlack,
                               decoration: textInputDecoration.copyWith(hintText: 'Servings'),
-                              validator: (val) {
-                                if(val.isEmpty){
-                                  return "servings required";
-                                }
-                                else{
-                                  return null;
-                                }
-                              },
-                              onChanged: (val) {
-                                setState(() => CreateRecipeForm.servings = int.parse(val));
-                              },
+                              // validator: (val) {
+                              //   if(val.isEmpty){
+                              //     return "servings required";
+                              //   }
+                              //   else{
+                              //     return null;
+                              //   }
+                              // },
+                              // onChanged: (val) {
+                              //   setState(() => CreateRecipeForm.servings = int.parse(val));
+                              // },
 
                             ),
                           ),
@@ -344,19 +344,19 @@ class CreateRecipeState extends State<CreateRecipe> {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(0, 3), // changes position of shadow
-                                  ),
-                                ],
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //     color: Colors.grey.withOpacity(0.5),
+                                //     spreadRadius: 5,
+                                //     blurRadius: 7,
+                                //     offset: Offset(0, 3), // changes position of shadow
+                                //   ),
+                                // ],
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(CreateRecipeForm.ingredients[index.toString()]["amount"].toString() + " " + CreateRecipeForm.ingredients[index.toString()]["unit"].toString() + " " + CreateRecipeForm.ingredients[index.toString()]["name"].toString(), style: basicBlackBold,),
+                                  Container(child: Text(CreateRecipeForm.ingredients[index.toString()]["amount"].toString() + " " + CreateRecipeForm.ingredients[index.toString()]["unit"].toString() + " " + CreateRecipeForm.ingredients[index.toString()]["name"].toString(), style: basicBlackBold, overflow: TextOverflow.ellipsis,), width: MediaQuery.of(context).size.width*.6,),
                                   IconButton(icon: Icon(Icons.close), onPressed: null)
                                 ],
                               ),
@@ -384,6 +384,7 @@ class CreateRecipeState extends State<CreateRecipe> {
                           ingredientPopUp();
                         },
                       ),
+                      SizedBox(height:5),
                       ConstrainedBox(
                         constraints: new BoxConstraints(
                           minHeight: 10,
@@ -400,14 +401,14 @@ class CreateRecipeState extends State<CreateRecipe> {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(0, 3), // changes position of shadow
-                                  ),
-                                ],
+                                // boxShadow: [
+                                  // BoxShadow(
+                                  //   color: Colors.grey.withOpacity(0.5),
+                                  //   spreadRadius: 5,
+                                  //   blurRadius: 7,
+                                  //   offset: Offset(0, 3), // changes position of shadow
+                                  // ),
+                                // ],
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -416,7 +417,7 @@ class CreateRecipeState extends State<CreateRecipe> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text("Step ${index+1}", style: basicBlackBold,),
-                                      Text(CreateRecipeForm.steps[index])
+                                      Container(child: Text(CreateRecipeForm.steps[index]), width: MediaQuery.of(context).size.width*.6,)
                                     ],
                                   ),
                                   IconButton(icon: Icon(Icons.close), onPressed: null)

@@ -9,7 +9,7 @@ import 'package:recipes/shared/loading.dart';
 import 'package:recipes/style/style.dart';
 
 
-ingredientBuilder(BuildContext context, Map ingredients){
+ingredientBuilder(BuildContext context, Map ingredients, double scale){
   return MediaQuery.removePadding(
     removeTop: true,
     context: context,
@@ -18,7 +18,7 @@ ingredientBuilder(BuildContext context, Map ingredients){
       physics: NeverScrollableScrollPhysics(),
       itemCount: ingredients.length,
       itemBuilder: (context, index) {
-        return Text("${ingredients[index.toString()]["amount"]} ${ingredients[index.toString()]["unit"]} ${ingredients[index.toString()]["name"]}", style: basicBlack,);
+        return Text("${ingredients[index.toString()]["amount"]*scale} ${ingredients[index.toString()]["unit"]} ${ingredients[index.toString()]["name"]}", style: basicBlack,);
       },
     )
   );
@@ -69,10 +69,13 @@ class ViewRecipe extends StatefulWidget {
 }
 
 class ViewRecipeState extends State<ViewRecipe> {
-  
+  double scale = 1;
+  String scaleString;
+
   @override
   Widget build(BuildContext context) {
     UserID user= Provider.of<UserID>(context);
+    
     // recipe = getRecipe(AssignedRecipe.id);
     return FutureBuilder(
       future: getRecipeForPage(AssignedRecipe.id),
@@ -107,6 +110,35 @@ class ViewRecipeState extends State<ViewRecipe> {
                               children: [
                                 Text("Servings: ${recipe["servings"]}", style: basicBlackBold,),
                                 Text("Prep Time: ${recipe["prep"]}min", style: basicBlackBold,),
+                                DropdownButton(
+                                  value: scaleString,
+                                  icon: Icon(Icons.arrow_drop_down),
+                                  iconSize: 25,
+                                  elevation: 15,
+                                  style: TextStyle(color: redTheme),
+                                  underline: Container(
+                                    height: 3,
+                                    color: redTheme
+
+                                  ),
+
+                                
+                                  onChanged: (String newValue) {
+                                    setState((){
+                                      print(newValue);
+                                      scaleString = newValue;
+                                      scale = double.parse(newValue);
+                                    });
+                                  },
+                                  items: <String>['.25', '.5', '1', '2', '3',]
+                                    .map<DropdownMenuItem<String>>((String value){
+                                      print(value);
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value + "x"),
+                                      );
+                                    }).toList(),
+                                )
                               ],
                             ),
                             SizedBox(height: 10,),
@@ -128,7 +160,7 @@ class ViewRecipeState extends State<ViewRecipe> {
                                 children: [
                                   Text("Ingredients:", style: basicMediumBlack,),
                                   SizedBox(height: 10),
-                                  ingredientBuilder(context, recipe["ingredients"]),
+                                  ingredientBuilder(context, recipe["ingredients"], scale),
                                 ]
                               )
                             ),
