@@ -31,15 +31,12 @@ MealPlanWidget(BuildContext context, String day, StateSetter setState){
     ),
     child: Column(
       children: [
-        Align(
-          alignment: Alignment.topLeft,
-          child: Padding(
-          
-            padding: EdgeInsets.all(10),
-            child: Text(day, style: mealPlanTitle)
-          )
-        ),
-      ],
+        Row(
+          children:[
+            Text(day, style: mealPlanTitle),
+          ]
+        )
+      ]
     )
   );
     
