@@ -27,7 +27,7 @@ class MealPlanState extends State<MealPlan> {
     UserID user = Provider.of<UserID>(context);
     return StreamBuilder(
       stream: FirebaseFirestore.instance.collection("mealPlan").where("userId", isEqualTo: user.uid).snapshots(),
-      builder: (context, snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         return Scaffold(
           body: Container(
             child: Column(

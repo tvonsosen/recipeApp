@@ -47,16 +47,20 @@ shoppingListWidget(BuildContext context, String ingredient, bool shoppingCart, v
 
 getIngredients(var snapshot) async {
   List recipesPlanned = [];
+  print("recipe planned: " + recipesPlanned.toString());
   ShoppingItemList.shoppingList = [];
   for(var item in snapshot.data.docs){
-    recipesPlanned = [];
+    // recipesPlanned = [];
     recipesPlanned.add(item["recipeId"]);
   }
+  print("recipe planned: " + recipesPlanned.toString());
   for(var item in recipesPlanned){
     var mealPlan = await getRecipe(item);
     // print(mealPlan.data());
     for(var ingredient = 0; ingredient < mealPlan.data()["ingredients"].length; ingredient++){
-      ShoppingItemList.shoppingList.add(mealPlan.data()["ingredients"][ingredient.toString()]["name"]);
+      if(ShoppingItemList.shoppingList.contains(mealPlan.data()["ingredients"][ingredient.toString()]["name"]) != true){
+        ShoppingItemList.shoppingList.add(mealPlan.data()["ingredients"][ingredient.toString()]["name"]);
+      }
     }
   }
 }
@@ -106,7 +110,6 @@ class ShoppingListState extends State<ShoppingList> {
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount: snapshot.data.docs.length,
                                   itemBuilder: (context, index){
-                                    print(ShoppingItemList.shoppingList);
                                     return shoppingListWidget(context, snapshot.data.docs[index]["name"], true, user, setState);
                                   }
                                 ),
@@ -119,7 +122,6 @@ class ShoppingListState extends State<ShoppingList> {
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount: ShoppingItemList.shoppingList.length,
                                   itemBuilder: (context, index){
-                                    print(ShoppingItemList.shoppingList);
                                     return shoppingListWidget(context, ShoppingItemList.shoppingList[index], false, user, setState);
                                   }
                                 ),
