@@ -147,6 +147,11 @@ void uploadMealPlan(int epoch, String userId, String recipeId) async{
     }).catchError((error)=>print("Failed to add meal plan: $error"));
 }
 
+Future<List<QueryDocumentSnapshot>> getMeals(String userId) async{
+    QuerySnapshot querySnap=await FirebaseFirestore.instance.collection('mealPlanning').where('createdBy',isEqualTo: userId).get();
+    return querySnap.docs;
+}
+
 void vote(String id, int number) async{
   
   await FirebaseFirestore.instance.collection('recipes').doc(id).update({
