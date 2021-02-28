@@ -189,6 +189,11 @@ class CreateRecipeState extends State<CreateRecipe> {
   @override
   Widget build(BuildContext context) {
     UserID user = Provider.of<UserID>(context);
+
+    // text controllers
+    var titleControl = TextEditingController();
+    var prepControl = TextEditingController();
+    var servingsControl = TextEditingController();
     return Scaffold(
       body: Container(
         child: Column(
@@ -219,8 +224,11 @@ class CreateRecipeState extends State<CreateRecipe> {
                             ]
                           )
                         ),
-                        onTap: (){
-                          scanImage(setState);
+                        onTap: () async{
+                          await scanImage(setState);
+                          servingsControl.text = CreateRecipeForm.servings.toString();
+                          prepControl.text = CreateRecipeForm.prepTime.toString();
+                          titleControl.text = CreateRecipeForm.title;
                         },
                       ),
                       SizedBox(height:50),
@@ -248,7 +256,7 @@ class CreateRecipeState extends State<CreateRecipe> {
                       SizedBox(height: 10,),
                       Container(
                         child: TextFormField(
-                          initialValue: CreateRecipeForm.title,
+                          controller: titleControl,
                           style: basicBlack,
                           decoration: textInputDecoration.copyWith(hintText: 'Recipe Title'),
                           validator: (val) {
@@ -272,7 +280,7 @@ class CreateRecipeState extends State<CreateRecipe> {
                           Container(
                             width: MediaQuery.of(context).size.width*.4,
                             child: TextFormField(
-                              initialValue: CreateRecipeForm.prepTime.toString(),
+                              controller: prepControl,
                               style: basicBlack,
                               decoration: textInputDecoration.copyWith(hintText: 'Prep Min'),
                               validator: (val) {
@@ -298,7 +306,7 @@ class CreateRecipeState extends State<CreateRecipe> {
                           Container(
                             width: MediaQuery.of(context).size.width*.4,
                             child: TextFormField(
-                              initialValue: CreateRecipeForm.servings.toString(),
+                              controller: servingsControl,
                               style: basicBlack,
                               decoration: textInputDecoration.copyWith(hintText: 'Servings'),
                               validator: (val) {
