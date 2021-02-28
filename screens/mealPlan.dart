@@ -65,8 +65,9 @@ class MealPlanState extends State<MealPlan> {
 
   // * date and time and weekdays
 
-  DateTime date = DateTime.now();
+  // DateTime date = DateTime.now();
   // date.weekday returns weekday
+  // List weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
   String dropdownValue = '5 Days';
   @override
@@ -119,16 +120,20 @@ class MealPlanState extends State<MealPlan> {
                       );
                     }).toList(),
               )
-        )
+
+        ),
              
             ),
+        ListView.builder(
+
+        )
             // Column(children: [
               
             //   ListView(
             //   padding: EdgeInsets.all(10),
             //   children: [
 
-                MealDays(context, 'Monday', 'Hot Dogs', setState),
+            //   MealDays(context, 'Monday', 'Hot Dogs', setState),
             //     MealDays(context, 'Tuesday', 'Hot Dogs', setState),
             //     MealDays(context, 'Wednesday', 'Hot Dogs', setState),
             //     MealDays(context, 'Thursday', 'Hot Dogs', setState),
