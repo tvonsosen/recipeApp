@@ -14,4 +14,5 @@ class ActiveDay {
 
 class Meals {
   static List meals;
+  static List allRecipes;
 }

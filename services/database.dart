@@ -144,11 +144,12 @@ Future<List<String>> search(String query) async{
 
 
 // upload meal plan
-void uploadMealPlan(int epoch, String userId, String recipeId) async{
+void uploadMealPlan(int epoch, String userId, String recipeId, String title) async{
   await FirebaseFirestore.instance.collection('mealPlan').add({
     'createdBy': userId,
     'recipeId': recipeId,
-    'time': epoch 
+    'time': epoch,
+    'title': title 
   }).catchError((error)=>print("Failed to add meal plan: $error"));
 }
 
@@ -159,6 +160,15 @@ Future getMeals(String userId) async{
   Meals.meals = querySnap.docs;
 
 }
+
+
+Future getRecipes() async{
+    QuerySnapshot querySnap=await FirebaseFirestore.instance.collection('recipes').get();
+    // return querySnap.docs;
+  Meals.allRecipes = querySnap.docs;
+
+}
+
 
 
 // get recipe by id

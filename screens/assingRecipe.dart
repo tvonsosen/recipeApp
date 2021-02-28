@@ -108,8 +108,11 @@ class AssingRecipeState extends State<AssingRecipe> {
                                           ]
                                         ),
                                         IconButton(icon: Icon(Icons.add, size: 40), onPressed: () async {
-                                          uploadMealPlan(ActiveDay.day, user.uid, searchResults[index]);
+                                          var recipe = await getRecipe(searchResults[index]);
+                                          String recipeTitle = recipe.data()["title"];
+                                          uploadMealPlan(ActiveDay.day, user.uid, searchResults[index], recipeTitle);
                                           print("new meal plan");
+                                          Navigator.of(context).pop();
                                         },),
                                       ],
                                     )
